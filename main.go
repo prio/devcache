@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	fmt.Println("Storing in cache directory")
 	err := os.Mkdir("cache", os.ModePerm)
 	if err != nil && !os.IsExist(err) {
 		log.Fatal(err)
@@ -18,7 +19,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		url := r.URL.RawQuery[4:]
 		fmt.Printf("Processing: %s\n", url)
-		fname := fmt.Sprintf("cache/%s", fmt.Sprintf("%X", md5.Sum([]byte(url))))
+		fname := fmt.Sprintf("cache/%X", md5.Sum([]byte(url)))
 
 		if _, err := os.Stat(fname); err != nil {
 			body, err := getPage(url, r.Header)
@@ -41,6 +42,7 @@ func main() {
 		fmt.Fprintf(w, string(content))
 	})
 
+	fmt.Println("Listening on localhost:4321...")
 	http.ListenAndServe(":4321", nil)
 }
 

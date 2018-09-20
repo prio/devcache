@@ -8,3 +8,6 @@ Run it, and then append `http://localhost:4321?url=` to any API call. i.e.
 
     curl http://localhost:4321?url=https://jsonplaceholder.typicode.com/users
 
+Build a binary and store it somewhere or run it using
+
+    go run main.go
