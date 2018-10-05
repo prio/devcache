@@ -43,6 +43,7 @@ func main() {
 	})
 
 	fmt.Println("Listening on localhost:4321...")
+	fmt.Println("Append 'http://localhost:4321?url=' to an API call to cache it")
 	http.ListenAndServe(":4321", nil)
 }
 
@@ -51,6 +52,8 @@ func getPage(url string, header http.Header) ([]byte, error) {
 
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header = header
+	// Keep it simple, don't want to deal with gzip etc.
+	req.Header["Accept-Encoding"] = []string{"identity"}
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -62,5 +65,6 @@ func getPage(url string, header http.Header) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return body, nil
 }
