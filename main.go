@@ -39,7 +39,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Fprintf(w, string(content))
+		w.Write(content)
 	})
 
 	fmt.Println("Listening on localhost:4321...")
